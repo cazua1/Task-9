@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Slider))]
+
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
@@ -22,7 +24,7 @@ public class HealthBar : MonoBehaviour
     private void Start()
     {
         _slider = GetComponent<Slider>();
-    }    
+    }
 
     private void ChangeHealthValue()
     {
@@ -35,12 +37,12 @@ public class HealthBar : MonoBehaviour
 
     private IEnumerator ChangeSliderValue()
     {
-        float changeStep = 0.1f;
+        int changeStep = 50;
 
-        while (_slider.value != _unit.CurrentHealthValue)
+        while (_slider.value != _unit.Health)
         {
-            _slider.value = Mathf.MoveTowards(_slider.value, _unit.CurrentHealthValue, changeStep);
+            _slider.value = Mathf.MoveTowards(_slider.value, _unit.Health, changeStep * Time.deltaTime);
             yield return null;
         }
-    }   
+    }
 }
